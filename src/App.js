@@ -1,26 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react'
+import Card from './components/Card'
 
 function App() {
+  const [cards, setCards] = useState([1,2,3,4,5])
+  const [score, setScore] = useState(0)
+  const [clicked, setClicked] = useState([])
+
+  const clickHandler = num => {
+    if (!clicked.includes(num)) {
+      setScore(score + 1)
+      const newClicked = [...clicked, num]
+      setClicked(newClicked)
+    } else {
+      setScore(0)
+      setClicked([])
+    }
+  }
+  console.log(clicked)
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Score: {score}</h1>
+      {cards.map(card => {
+        return <Card key={card} id={card} clickHandler={clickHandler} />
+      })}
     </div>
   );
 }
 
-export default App;
+export default App
