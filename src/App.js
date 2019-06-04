@@ -2,12 +2,15 @@ import React, { useState, useEffect } from 'react'
 import Card from './components/Card'
 import styles from './styles/index.module.scss'
 
-const CardsArray = [1,2,3,4,5,6,7,8,9]
+const CardsArray = [1,2,3,4,5,6,7,8,9,10,11,12]
 
 function App() {
+  const [gameStarted, setGameStarted] = useState(false)
   const [cards, setCards] = useState([])
   const [score, setScore] = useState(0)
+  const [topScore, setTopScore] = useState(0)
   const [clicked, setClicked] = useState([])
+  const [displayed, setDisplayed] = useState(false)
 
   const shuffle = arr => {
     const Shuffled = arr.map(a => [Math.random(), a])
@@ -17,33 +20,68 @@ function App() {
     
   }
 
+  // shuffle for the initial render
+  // new way of handling componentDidMount
+  useEffect(() => {
+    setCards(shuffle(CardsArray))
+    setDisplayed(true)
+  }, [])
+
+  // handle wins & losses
+  useEffect(() => {
+    if (score === CardsArray.length) {
+      console.log('you won!')
+    }
+
+    if (score === 0 && gameStarted) {
+      console.log('loser')
+    }
+  }, [score, gameStarted])
+
+  
+  const animationTimer = () => {
+    setDisplayed(false)
+    setTimeout(() => {
+      setCards(shuffle(CardsArray))
+      setTimeout(() => {
+        setDisplayed(true)
+      }, 100)
+    }, 400)
+  }
+
+
   const clickHandler = num => {
+    setGameStarted(true)
     if (!clicked.includes(num)) {
       setScore(score + 1)
-      const newClicked = [...clicked, num]
-      setClicked(newClicked)
-      setCards(shuffle(CardsArray))
+      setClicked([...clicked, num])
+      animationTimer()
     } else {
       setScore(0)
       setClicked([])
-      setCards(shuffle(CardsArray))
+      animationTimer()
     }
   }
 
-  useEffect(() => {
-    setCards(shuffle(CardsArray))
-  }, [])
-
-
   return (
-    <div className="App">
-      <h1>Score: {score}</h1>
+      <div className={styles.appContainer}>
+      <div className={styles.title}>Memory Test</div>
       <div className={styles.cardContainer}>
         {cards.map(card => {
-          return <Card key={card} id={card} clickHandler={clickHandler} />
+          return (
+            <Card
+              key={card}
+              id={card}
+              displayed={displayed}
+              clickHandler={clickHandler}
+            />
+          )
         })}
       </div>
-    </div>
+      <div className={styles.scoreContainer}>
+        <span className={styles.score}>Score: {score}</span>
+      </div>
+    </div>    
   );
 }
 
