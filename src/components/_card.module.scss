@@ -1,7 +1,6 @@
 .card {
-  width: 14vh;
-  height: 14vh;
-  margin: 2vh; 
+  height: 0;
+  padding-bottom: calc(100% / (1/1));
   position: relative;
   background: rgba(black, 0.5);
   border-radius: 50%;
@@ -24,7 +23,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  transform: translateY(112%);
+  transform: translateY(112%) scale(0.6);
   transition: transform .15s ease-in-out .2s;
   background: white;
 
@@ -38,6 +37,6 @@
 }
 
 .shown {
-  transform: translateY(0%);
+  transform: translateY(0%) scale(1);
 }
 

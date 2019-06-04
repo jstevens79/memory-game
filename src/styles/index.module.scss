@@ -18,10 +18,15 @@ body {
 }
 
 .cardContainer {
-  display: flex;
-  flex-wrap: wrap;
-  padding: 0px;
-  justify-content: space-between;
+  width: 80vmin;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: auto;
+  grid-column-gap: 3vh;
+  grid-row-gap: 3vh;
+  position: relative;
+  margin: 0 auto;
+
 }
 
 .scoreContainer {
