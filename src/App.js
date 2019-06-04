@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Card from './components/Card'
 import styles from './styles/index.module.scss'
 
-const CardsArray = [1,2,3,4,5,6,7,8,9,10,11,12]
+import {TransportationImages} from './TransportationImages'
 
 function App() {
   const [gameStarted, setGameStarted] = useState(false)
@@ -23,13 +23,13 @@ function App() {
   // shuffle for the initial render
   // new way of handling componentDidMount
   useEffect(() => {
-    setCards(shuffle(CardsArray))
+    setCards(shuffle(TransportationImages))
     setDisplayed(true)
   }, [])
 
   // handle wins & losses
   useEffect(() => {
-    if (score === CardsArray.length) {
+    if (score === TransportationImages.length) {
       console.log('you won!')
     }
 
@@ -42,7 +42,7 @@ function App() {
   const animationTimer = () => {
     setDisplayed(false)
     setTimeout(() => {
-      setCards(shuffle(CardsArray))
+      setCards(shuffle(TransportationImages))
       setTimeout(() => {
         setDisplayed(true)
       }, 100)
@@ -54,6 +54,7 @@ function App() {
     setGameStarted(true)
     if (!clicked.includes(num)) {
       setScore(score + 1)
+      if ((score + 1) > topScore) setTopScore(score + 1)
       setClicked([...clicked, num])
       animationTimer()
     } else {
@@ -70,8 +71,8 @@ function App() {
         {cards.map(card => {
           return (
             <Card
-              key={card}
-              id={card}
+              key={`card${card.id}`}
+              data={card}
               displayed={displayed}
               clickHandler={clickHandler}
             />
@@ -80,6 +81,7 @@ function App() {
       </div>
       <div className={styles.scoreContainer}>
         <span className={styles.score}>Score: {score}</span>
+        <span className={styles.score}>Top Score: {topScore}</span>
       </div>
     </div>    
   );

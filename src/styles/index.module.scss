@@ -1,11 +1,13 @@
 @import './reset.module';
 
 body {
-  background: rgb(82, 137, 255);
+  background: #192e34;
+  color: white;
 }
 
 .appContainer {
-  max-width: 710px;
+  width: 80vw;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
