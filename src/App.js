@@ -81,7 +81,10 @@ function App() {
       </div>
       <div className={styles.scoreContainer}>
         <span className={styles.score}>Score: {score}</span>
-        <span className={styles.score}>Top Score: {topScore}</span>
+        {!gameStarted &&
+          <span className={styles.message}>Click an image to get started!</span>
+        }
+        <span className={styles.topScore}>Top Score: {topScore}</span>
       </div>
     </div>    
   );
