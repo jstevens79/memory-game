@@ -1,4 +1,4 @@
-### Memory Game
+# Memory Game
 A basic, fun memory game based on transportation types. See how many you can remember, and try to beat your best score.
 
 ## Technologies
