@@ -17,7 +17,7 @@ body {
 
 .title {
   font-size: 4vmin;
-  padding: 40px 0 40px 0;
+  padding: 4vmin 0 4vmin 0;
   text-align: center;
 }
 
@@ -35,13 +35,14 @@ body {
 
 .scoreContainer {
   display: flex;
-  padding: 40px 0 20px 0;
+  padding: 4vmin 0 20px 0;
   justify-content: center;
-  font-size: 1.4em;
+  font-size: 2.5vmin;
+  align-items: stretch;
 
   .score {
-    min-width: 120px;
-    flex: 0;
+    max-width: 200px;
+    flex: 1;
     padding: 20px;
     background: rgba(black, 0.2);
     border-radius: 16px 0 0 16px;
@@ -49,20 +50,22 @@ body {
     text-align: center;
   }
 
+
   .message {
-    flex: 1;
+    flex: 5;
     text-align: center;
     background: white;
     padding: 20px;
     color: rgba(black, 0);
     animation: flashing 1.5s infinite;
     text-shadow: none;
+    width: 100%;   
+  }
 
-    &.hidden {
-      flex: 0;
-      width: 0;
-      overflow: hidden;
-    }
+  .fail {
+    background: #d14842;
+    color: white;
+    animation: none;
   }
 
   
@@ -77,9 +80,9 @@ body {
 
 
   .topScore {
-    min-width: 120px;
+    max-width: 200px;
     text-align: right;
-    flex: 0;
+    flex: 1;
     padding: 20px;
     border-radius: 0 16px 16px 0;
     background: rgba(black, 0.2);

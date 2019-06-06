@@ -11,6 +11,9 @@ function App() {
   const [topScore, setTopScore] = useState(0)
   const [clicked, setClicked] = useState([])
   const [displayed, setDisplayed] = useState(false)
+  const [currentClicked, setCurrentClicked] = useState({current: null, correct: false})
+  const [gameWon, setGameWon] = useState(false)
+  const [gameLost, setGameLost] = useState(false)
 
   const shuffle = arr => {
     const Shuffled = arr.map(a => [Math.random(), a])
@@ -30,19 +33,15 @@ function App() {
   // handle wins & losses
   useEffect(() => {
     if (score === TransportationImages.length) {
-      console.log('you won!')
+      setGameWon(true)
     }
-
-    if (score === 0 && gameStarted) {
-      console.log('loser')
-    }
-  }, [score, gameStarted])
-
+  }, [score])
   
   const animationTimer = () => {
     setDisplayed(false)
     setTimeout(() => {
       setCards(shuffle(TransportationImages))
+      setCurrentClicked({current: null, correct: false})
       setTimeout(() => {
         setDisplayed(true)
       }, 100)
@@ -51,14 +50,19 @@ function App() {
 
 
   const clickHandler = num => {
+    setGameLost(false)
+    setGameWon(false)
     setGameStarted(true)
     if (!clicked.includes(num)) {
+      setCurrentClicked({current: num, correct: true})
       setScore(score + 1)
       if ((score + 1) > topScore) setTopScore(score + 1)
       setClicked([...clicked, num])
       animationTimer()
     } else {
-      setScore(0)
+      setCurrentClicked({current: num, correct: false})
+      setScore(0);
+      setGameLost(true)
       setClicked([])
       animationTimer()
     }
@@ -75,15 +79,22 @@ function App() {
               data={card}
               displayed={displayed}
               clickHandler={clickHandler}
+              currentClicked={currentClicked}
             />
           )
         })}
       </div>
       <div className={styles.scoreContainer}>
         <span className={styles.score}>Score: {score}</span>
-        {!gameStarted &&
-          <span className={styles.message}>Click an image to get started!</span>
-        }
+          {!gameStarted &&
+            <span className={styles.message}>Click an image to get started!</span>
+          }
+          {gameWon &&
+            <span className={styles.message}>Good job! Click an image to try again!</span>
+          }
+          {gameLost &&
+            <span className={`${styles.message} ${styles.fail}`}>Sorry, you lost. Click an image to try again!</span>
+          }
         <span className={styles.topScore}>Top Score: {topScore}</span>
       </div>
     </div>    
